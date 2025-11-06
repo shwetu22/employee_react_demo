@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import axios from 'axios'; // ✅ import axios
+import axios from "axios";
+import { useState } from "react";
 
 function Register() {
+
   const [employee, setEmployee] = useState({
-    name: '',
-    email: '',
-    password: ''
+    name: "",
+    email: "",
+    password: "",
   });
 
   const inputHandler = (e) => {
@@ -17,93 +18,89 @@ function Register() {
     e.preventDefault();
 
     axios
-      .post('https://employee-crud-django-1.onrender.com/register', {
+      .post("https://employee-crud-django-1.onrender.com/register", {
         name: employee.name,
         email: employee.email,
-        password: employee.password
+        password: employee.password,
       })
       .then((response) => {
         if (response.data) {
-          alert('Registered successfully!');
+          alert("Registerd");
         } else {
-          alert('User already exists!');
+          alert("Already Exist");
         }
-        reset();
       })
-      .catch(() => alert('Something went wrong'));
+      .catch((error) => alert(error.message || "Something went wrong"));
+
+      reset();
   };
 
   const reset = () => {
     setEmployee({
-      name: '',
-      email: '',
-      password: ''
+      name: "",
+      email: "",
+      password: "",
     });
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <form onSubmit={register} className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">Create an Account</h2>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <form
+        onSubmit={register}
+        className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md"
+      >
+        <h2 className="text-2xl font-semibold text-center mb-6 text-gray-700">
+          Register
+        </h2>
 
+        {/* Name Field */}
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2" htmlFor="name">
-            Name
-          </label>
+          <label className="block text-gray-600 font-medium mb-2">Name</label>
           <input
-            id="name"
             type="text"
             name="name"
             value={employee.name}
             onChange={inputHandler}
             placeholder="Enter your name"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
           />
         </div>
 
+        {/* Email Field */}
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2" htmlFor="email">
-            Email
-          </label>
+          <label className="block text-gray-600 font-medium mb-2">Email</label>
           <input
-            id="email"
             type="email"
             name="email"
             value={employee.email}
             onChange={inputHandler}
             placeholder="Enter your email"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
           />
         </div>
 
+        {/* Password Field */}
         <div className="mb-6">
-          <label className="block text-gray-700 font-medium mb-2" htmlFor="password">
+          <label className="block text-gray-600 font-medium mb-2">
             Password
           </label>
           <input
-            id="password"
             type="password"
             name="password"
             value={employee.password}
             onChange={inputHandler}
             placeholder="Enter your password"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
           />
         </div>
 
+        {/* Register Button */}
         <button
           type="submit"
-          className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition duration-200"
+          className="w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600 transition-all duration-300"
         >
           Register
         </button>
-
-        <p className="text-sm text-center text-gray-600 mt-4">
-          Already have an account?{' '}
-          <Link href={'/login'} className="text-indigo-600 hover:underline">
-            Login
-          </Link>
-        </p>
       </form>
     </div>
   );
